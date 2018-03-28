@@ -1,2 +1,0 @@
-As a student user, the student can be able to redirect to the cscb20 piazza course website when
-clicking "piazza" at the navigation bar.

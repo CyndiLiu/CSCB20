@@ -1,2 +1,0 @@
-As a student user, the student is able to see the upcoming events from google calendar which is
-scheduled by the instructor.

@@ -1,2 +1,0 @@
-As a student user, the student must able to see the course information, and access to the detailed
-course syllabus file when clicking "PDF" besides Syllabus.

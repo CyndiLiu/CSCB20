@@ -1,3 +1,0 @@
-As a student user, the student can be able to see the online resources and software information,
-and also can access the tutorial websites of SQL, piazza, and PUTTY download page when clicking
-the relative links.

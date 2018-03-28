@@ -1,2 +1,0 @@
-As a student user, the student can be able to redirect to the Markus website when clicking "Markus"
-at the navigation bar.

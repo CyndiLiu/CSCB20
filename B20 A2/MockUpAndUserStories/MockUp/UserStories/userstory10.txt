@@ -1,2 +1,0 @@
-As a student user, the student can be able to redirect to the utsc cs lab website when clicking
-"cs lab" link at the footer in every pages.

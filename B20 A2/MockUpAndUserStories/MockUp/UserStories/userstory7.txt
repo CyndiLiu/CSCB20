@@ -1,2 +1,0 @@
-As a student user, the student can be able to see the lecture schedule and the lecture slides and 
-notes when clicking the underlined links.

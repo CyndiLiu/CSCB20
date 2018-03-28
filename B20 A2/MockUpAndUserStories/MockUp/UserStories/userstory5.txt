@@ -1,2 +1,0 @@
-As a student user, the student can see the PDF files of assignment instructions when clicking
-"assignment1" and "assignment2" links.

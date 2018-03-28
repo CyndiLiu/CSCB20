@@ -1,2 +1,0 @@
-As a student user, the student can be able to see the previous and updating accouncments from
-the instructor. 

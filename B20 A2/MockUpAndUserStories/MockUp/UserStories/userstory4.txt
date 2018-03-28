@@ -1,2 +1,0 @@
-As a student user, the student can see the general information of upcoming tests and room
-arrangements.
