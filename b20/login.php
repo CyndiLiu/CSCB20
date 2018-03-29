@@ -1,48 +1,32 @@
 <?php
-    include("config.php");
-    session_start();
+/* User login process, checks if user exists and password is correct */
 
-    if($_SERVER["REQUEST_METHOD"] == "POST") {
-        // username and password sent from form 
+// Escape email to protect against SQL injections
+$email = $mysqli->escape_string($_POST['email']);
+$result = $mysqli->query("SELECT * FROM users WHERE email='$email'");
+
+
+if ( $result->num_rows == 0 ){ // User doesn't exist
+    $_SESSION['message'] = "User with that email doesn't exist!";
+    header("location: error.php");
+} else { // User exists
+    $user = $result->fetch_assoc();
+
+    if ( password_verify($_POST['password'], $user['password']) ) {
+        $_SESSION['email'] = $user['email'];
+        $_SESSION['first_name'] = $user['first_name'];
+        $_SESSION['last_name'] = $user['last_name'];
+        $_SESSION['active'] = $user['active'];
         
-        $myusername = mysqli_real_escape_string($db,$_POST['username']);
-        $mypassword = mysqli_real_escape_string($db,$_POST['password']); 
-        
-        $sql = "SELECT id FROM admin WHERE username = '$myusername' and password = '$mypassword'";
-        $result = mysqli_query($db,$sql);
-        $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
-        $count = mysqli_num_rows($result);
-        
-        // If result matched $myusername and $mypassword, table row must be 1 row
-          
-        if($count == 1) {
-           $_SESSION['login_user'] = $myusername;
-           header("Location: welcome.php");
-        } else {
-           $error = "Your Login Name or Password is invalid";
-        }
-     }
+        // This is how we'll know the user is logged in
+        $_SESSION['logged_in'] = true;
+        header("location: homepage.php");
+    }
+    else {
+        $_SESSION['message'] = "You have entered wrong password, try again!";
+        header("location: error.php");
+    }
+}
 ?>
 
-<html>
-	<head>
-		<!-- <meta charset="utf-8"> -->
-		<title>Transparent Login Form</title>
-		<link rel="stylesheet" href="style.css">
-	</head>
-	<body>
-		<div class="loginplace">
-			<img src="ut.png" class="user">
-            <h2>Create Account</h2>
-			<form>
-				<p>Email</p>
-				<input type="text" name="" placeholder="Enter Email">
-				<p>Password</p>
-				<input type="password" name="" placeholder="••••••">
-                <input type="submit" name="" value="Sign Up">
-                <input type="submit" name="" value="Cancel">
-				<a href="login.html">Sign In</a>
-			</form>
-		</div>
-	</body>
-</html>
+
