@@ -9,7 +9,7 @@
         <title>Error</title>
         <link rel="stylesheet" href="html/style.css">
     </head>
-    
+
     <body>
 		<div class="loginplace" style="height: 300px">
 			<img src="html/ut.png" class="user">
@@ -21,8 +21,4 @@
 			</form>
 		</div>
 	</body>
-
-
-
-
 </html>

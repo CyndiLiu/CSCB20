@@ -1,34 +1,31 @@
 
 <?php
-/* Registration process, inserts user info into the database 
-   and sends account confirmation email message
- */
-// Set session variables to be used on profile.php page
+/* Registration process, inserts user info into the database */
+include 'config.php';
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $_SESSION['email'] = $_POST['email'];
-    $_SESSION['first_name'] = $_POST['firstname'];
-    $_SESSION['last_name'] = $_POST['lastname'];
+    $_SESSION['UTORid'] = $_POST['UTORid'];
+    $_SESSION['firstname'] = $_POST['firstname'];
+    $_SESSION['lastname'] = $_POST['lastname'];
 
     // Escape all $_POST variables to protect against SQL injections
-    $first_name = $mysqli->escape_string($_POST['firstname']);
-    $last_name = $mysqli->escape_string($_POST['lastname']);
-    $email = $mysqli->escape_string($_POST['email']);
+    $firstname = $mysqli->escape_string($_POST['firstname']);
+    $lastname = $mysqli->escape_string($_POST['lastname']);
+    $UTORid = $mysqli->escape_string($_POST['UTORid']);
     $password = $mysqli->escape_string(password_hash($_POST['password'], PASSWORD_BCRYPT));
     // should be selection here
-    $hash = $mysqli->escape_string( md5( rand(0,1000) ) );
+    //$logintype = $mysqli->escape_string( md5( rand(0,1000) ) );
 
     // Check if user with that email already exists
-    $result = $mysqli-> query("SELECT * FROM users WHERE email='$email'") or die($mysqli->error());
+    $result = $mysqli-> query("SELECT * FROM Accounts WHERE UTORid='$UTORid'") or die($mysqli->error());
 
     // We know user email exists if the rows returned are more than 0
     if ( $result->num_rows > 0 ) {
-        $_SESSION['message'] = 'User with this email already exists!';
-        header("location: error.php");
+        $_SESSION['message'] = 'User with this UTORid already exists!';
     } else { 
-        // Email doesn't already exist in a database, proceed...
-        // active is 0 by DEFAULT (no need to include it here)
-        $sql = "INSERT INTO users (first_name, last_name, email, password, hash) " 
-                . "VALUES ('$first_name','$last_name','$email','$password', '$hash')";
+        // UTORIid doesn't already exist in a database, proceed...
+        $sql = "INSERT INTO Accounts (firstname, lastname, UTORid, password, logintype) " 
+                . "VALUES ('$firstname','$lastname','$UTORid','$password', '$logintype')";
 
         // Add user to the database
         if ( $mysqli->query($sql) ){
@@ -57,8 +54,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                   <input type="text" name="" placeholder="Enter First Name">
                 <p>Last Name</p>
 				<input type="text" name="" placeholder="Enter Last Name">
-				<p>Email</p>
-				<input type="text" name="" placeholder="Enter Email">
+				<p>UTORid</p>
+				<input type="text" name="" placeholder="Enter UTORid">
 				<p>Password</p>
                 <input type="text" name="" placeholder="Enter Password">
 
@@ -77,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
 
-                <input type="submit" name="" value="Register">
+                <a href="main.php"><button class="button button-block" name="login" />Register</button></a><br>
 				<a href="main.php">Sign In</a>
 			</form>
 		</div>

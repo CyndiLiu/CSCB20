@@ -23,17 +23,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		<title>CSCB20</title>
 		<link rel="stylesheet" href="html/style.css">
 	</head>
+	
 	<body>
 		<div class="loginplace">
 			<img src="html/ut.png" class="user">
 			<h2>Log In</h2>
 			<form>
-				<p>Email</p>
-				<input type="text" name="" placeholder="Enter Email">
+				<p>UTORid</p>
+				<input type="text" name="" placeholder="Enter UTORid">
 				<p>Password</p>
 				<input type="password" name="" placeholder="••••••">
-                <input type="submit" name="login" value="Sign In">
-                <!-- need to be fixed -->
+				<a href="html/index.html"><button class="button button-block" name="login" />Sign In</button></a><br>
 				<a href="register.php" name="register">Create Account</a>
 			</form>
 		</div>

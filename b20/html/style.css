@@ -74,7 +74,10 @@ h3 {
 	color: rgba(255,255,255,.5);
 }
 
-.loginplace input[type="submit"] {
+.button {
+	width: 100%;
+	margin-bottom: 20px;
+	text-align: center;
 	border: none;
 	outline: none;
 	height: 40px;
@@ -85,7 +88,7 @@ h3 {
 	border-radius: 20px;
 }
 
-.loginplace input[type="submit"]:hover {
+.button:hover {
 	background: #fdbac8;
 	color: #262626;
 }
