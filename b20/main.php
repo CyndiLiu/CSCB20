@@ -1,63 +1,28 @@
-<?php 
-/* Main page with two forms: sign up and log in */
-require 'config.php';
+
+<?php
+/* User login process, checks if user exists and password is correct */
+include ("config.php");
 session_start();
-?>
 
-<?php 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // user logging in
-    if (isset($_POST['login'])) {
-        if ( $result->num_rows == 0 ){ // User doesn't exist
-			$_SESSION['message'] = "User with that email doesn't exist!";
-			header("location: error.php");
-		} else { // User exists
-			$UTORid = $result->fetch_assoc();
-	
-			$_SESSION['UTORid'] = $_POST['UTORid'];
-			$_SESSION['firstname'] = $_POST['firstname'];
-			$_SESSION['lastname'] = $_POST['lastname'];
-	
-			// Escape all $_POST variables to protect against SQL injections
-			$firstname = $mysqli->escape_string($_POST['firstname']);
-			$lastname = $mysqli->escape_string($_POST['lastname']);
-			$UTORid = $mysqli->escape_string($_POST['UTORid']);
-			$password = $mysqli->escape_string(password_hash($_POST['password'], PASSWORD_BCRYPT));
-			// should be selection here
-			//$logintype = $mysqli->escape_string( md5( rand(0,1000) ) );
-	
-			// UTORid and password both should not be empty
-			if ($UTORid && $passowrd){
-				// check whether database has the maching UTORid and password
-				$sql = "select * from Accounts where UTORid = '$UTORid' and password='$passowrd'";
-				$result = mysql_query($sql); // execute sql
-				$rows=mysql_num_rows($result); // return a value
-	
-				if($rows){ // 0 false 1 true
-					// if success, jump to welcome page
-					header("refresh:0; url = success.php");
-					exit;
-				} else {
-					//if error, using js to jump back to login page
-					header("refresh:0; url = error.php");
-				}
-	
-			} else { // if one of the UTORid and password is empty 
-				// if error, using js to jump back to log in page
-				echo "Incompleted Form";
-				echo "
-					<script>
-						setTimeout(function(){window.location.href='main.php';},1000);
-					</script>";
-			}
-			// close the database
-			mysql_close();
-		}
-    }
-
-    // user registering
-    else if (isset($_POST['register'])) {
-        require 'register.php';
+if($_SERVER["REQUEST_METHOD"] == "POST") {
+    // username and password sent from SQL
+    
+    $myutorid = mysqli_real_escape_string($dbconn,$_POST['UTORid']);
+    $mypassword = mysqli_real_escape_string($dbconn,$_POST['password']); 
+    
+    $sql = "SELECT * FROM Accounts WHERE UTORid = '$myutorid' and password = '$mypassword'";
+    $result = mysqli_query($db,$sql);
+    $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+    $count = mysqli_num_rows($result);
+    
+    // If result matched $myutorid and $mypassword, table row must be 1 row
+		
+    if($count == 1) {
+        $_SESSION['login_user'] = $myutorid;
+        header("Location: html/index.html");
+    }else {
+    $error = "Your Login Name or Password is invalid";
+    header("location: error.php");
     }
 }
 ?>
@@ -77,10 +42,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 				<input type="text" name="" placeholder="Enter UTORid">
 				<p>Password</p>
 				<input type="password" name="" placeholder="••••••">
-				<input type="submit" name="" value="Sign In">
+				<a href="html/index.html"><button class="button button-block" name="login" />Sign In</button></a><br>
 				<a href="register.php" name="register">Create Account</a>
 			</form>
 		</div>
 	</body>
 </html>
-
