@@ -11,13 +11,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     $mypassword = mysqli_real_escape_string($dbconn,$_POST['password']); 
     
     $sql = "SELECT * FROM Accounts WHERE UTORid = '$myutorid' and password = '$mypassword'";
-    $result = mysqli_query($db,$sql);
-    $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
-    $count = mysqli_num_rows($result);
-    
-    // If result matched $myutorid and $mypassword, table row must be 1 row
+    $result = mysqli_query($conn,$sql);
+	
+	// If result matched $myutorid and $mypassword, table row must be 1 row
 		
-    if($count == 1) {
+    if(mysqli_num_rows($result) == 1) {
         $_SESSION['login_user'] = $myutorid;
         header("Location: html/index.html");
     }else {

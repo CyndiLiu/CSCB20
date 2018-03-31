@@ -2,28 +2,27 @@
 /* Registration process, inserts user info into the database */
 include ('config.php');
 
-$firstname =$_POST['firstname'];
-$lastname = $_POST['lastname'];
-$UTORid = $_POST['UTORid'];
-$password = $_POST['password'];
-// should be selection here
-$logintype = $_POST["userselect"];
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
+    $firstname =$_POST['firstname'];
+    $lastname = $_POST['lastname'];
+    $UTORid = $_POST['UTORid'];
+    $password = $_POST['password'];
+    // should be selection here
+    $logintype = $_POST["userselect"];
     // Check if user with that UTORid already exists
-    $result = $mysqli-> query("SELECT * FROM Accounts WHERE UTORid='$UTORid'") or die($mysqli->error());
+    $mysqli = "SELECT * from Accounts WHERE UTORid = $UTROid";
+    $result = mysqli_query($conn,$mysqli);
     // We know user email exists if the rows returned are more than 0
-    if ( $result->num_rows > 0 ) {
+    if (mysqli_num_rows($result) > 0) {
         $_SESSION['message'] = 'User with this UTORid already exists!';
     } else { 
         // UTORIid doesn't already exist in a database, proceed...
         $sql = "INSERT INTO Accounts (firstname, lastname, UTORid, password, logintype) " 
                 . "VALUES ('$firstname','$lastname','$UTORid','$password', '$logintype')";
         // Add user to the database
-        if ( $mysqli->query($sql) ){
-            // So we know the user has logged in
-            $_SESSION['logged_in'] = true;
+        if ($conn->query($sql) === TRUE) {
+            $_SESSION['message'] = "New account created successfully";
+            header("loaction: main.php");
         } else {
             $_SESSION['message'] = 'Registration failed!';
             header("location: error.php");
