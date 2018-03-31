@@ -1,19 +1,26 @@
-<?php 
-/* Main page with two forms: sign up and log in */
-require 'config.php';
+
+<?php
+/* User login process, checks if user exists and password is correct */
+include ("config.php");
 session_start();
-?>
 
-<?php 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // user logging in
-    if (isset($_POST['login'])) {
-        require 'login.php';
-    }
-
-    // user registering
-    else if (isset($_POST['register'])) {
-        require 'register.php';
+if($_SERVER["REQUEST_METHOD"] == "POST") {
+    // username and password sent from SQL
+    
+    $myutorid = mysqli_real_escape_string($dbconn,$_POST['UTORid']);
+    $mypassword = mysqli_real_escape_string($dbconn,$_POST['password']); 
+    
+    $sql = "SELECT * FROM Accounts WHERE UTORid = '$myutorid' and password = '$mypassword'";
+    $result = mysqli_query($conn,$sql);
+	
+	// If result matched $myutorid and $mypassword, table row must be 1 row
+		
+    if(mysqli_num_rows($result) == 1) {
+        $_SESSION['login_user'] = $myutorid;
+        header("Location: html/index.html");
+    }else {
+    $error = "Your Login Name or Password is invalid";
+    header("location: error.php");
     }
 }
 ?>
@@ -23,20 +30,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		<title>CSCB20</title>
 		<link rel="stylesheet" href="html/style.css">
 	</head>
+	
 	<body>
 		<div class="loginplace">
 			<img src="html/ut.png" class="user">
 			<h2>Log In</h2>
 			<form>
-				<p>Email</p>
-				<input type="text" name="" placeholder="Enter Email">
+				<p>UTORid</p>
+				<input type="text" name="" placeholder="Enter UTORid">
 				<p>Password</p>
 				<input type="password" name="" placeholder="••••••">
-                <input type="submit" name="login" value="Sign In">
-                <!-- need to be fixed -->
+				<a href="html/index.html"><button class="button button-block" name="login" />Sign In</button></a><br>
 				<a href="register.php" name="register">Create Account</a>
 			</form>
 		</div>
 	</body>
 </html>
-
