@@ -1,7 +1,6 @@
 <?php
 /* Registration process, inserts user info into the database */
 include ('config.php');
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $firstname =$_POST['firstname'];
     $lastname = $_POST['lastname'];
@@ -48,20 +47,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 				<p>UTORid</p>
 				<input type="text" name="" placeholder="Enter UTORid">
 				<p>Password</p>
-                <input type="text" name="" placeholder="******">
+                <input type="text" name="" placeholder="Enter Password">
+
+
 
                 <p>Login As</p>
                 <script src="js/option.js"></script>
                 <div class="test-box" style="padding: 15px 5px 20px 0px">
-                    <select name="userselect">
+                    <select name="type" id="type1">
                         <option value="1" selected>Student</option>
                         <option value="2">T.A.</option>
                         <option value="3">Instructor</option>
                     </select>
                 </div>
 
-                <a href="login.php"><button class="button button-block" name="login" />Register</button></a><br>
-				<a href="login.php">Sign In</a>
+				<input type="submit" name="" value="Register">
+				<a href="main.php">Sign In</a>
 			</form>
 		</div>
 	</body>
