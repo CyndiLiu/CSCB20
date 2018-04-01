@@ -1,67 +1,74 @@
 <?php
-/* Registration process, inserts user info into the database 
-   and sends account confirmation email message
- */
+/* Registration process, inserts user info into the database */
+include ('config.php');
+session_start();
 
-// Set session variables to be used on profile.php page
-$_SESSION['email'] = $_POST['email'];
-$_SESSION['first_name'] = $_POST['firstname'];
-$_SESSION['last_name'] = $_POST['lastname'];
-
-// Escape all $_POST variables to protect against SQL injections
-$first_name = $mysqli->escape_string($_POST['firstname']);
-$last_name = $mysqli->escape_string($_POST['lastname']);
-$email = $mysqli->escape_string($_POST['email']);
-$password = $mysqli->escape_string(password_hash($_POST['password'], PASSWORD_BCRYPT));
-$hash = $mysqli->escape_string( md5( rand(0,1000) ) );
-      
-// Check if user with that email already exists
-$result = $mysqli->query("SELECT * FROM users WHERE email='$email'") or die($mysqli->error());
-
-// We know user email exists if the rows returned are more than 0
-if ( $result->num_rows > 0 ) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
-    $_SESSION['message'] = 'User with this email already exists!';
-    header("location: error.php");
-    
-}
-else { // Email doesn't already exist in a database, proceed...
+    $firstname = $_POST['firstname'];
+    $lastname = $_POST['lastname'];
+    $UTORid = $_POST['UTORid'];
+    $password = $_POST['password'];
 
-    // active is 0 by DEFAULT (no need to include it here)
-    $sql = "INSERT INTO users (first_name, last_name, email, password, hash) " 
-            . "VALUES ('$first_name','$last_name','$email','$password', '$hash')";
+    // Int type field
+    if (isset($_POST['logintype']) && is_numeric($_POST['logintype']))
+        $logintype = $_POST['logintype'];
+    else
+        $logintype = 1;
 
-    // Add user to the database
-    if ( $mysqli->query($sql) ){
+    // Check if user with that UTORid already exists
+    $mysqli = "SELECT * from Accounts WHERE UTORid = '$UTORid'";
+    $result = mysqli_query($db,$mysqli);
 
-        $_SESSION['active'] = 0; //0 until user activates their account with verify.php
-        $_SESSION['logged_in'] = true; // So we know the user has logged in
-        $_SESSION['message'] =
-                
-                 "Confirmation link has been sent to $email, please verify
-                 your account by clicking on the link in the message!";
-
-        // Send registration confirmation link (verify.php)
-        $to      = $email;
-        $subject = 'Account Verification ( clevertechie.com )';
-        $message_body = '
-        Hello '.$first_name.',
-
-        Thank you for signing up!
-
-        Please click this link to activate your account:
-
-        http://localhost/login-system/verify.php?email='.$email.'&hash='.$hash;  
-
-        mail( $to, $subject, $message_body );
-
-        header("location: profile.php"); 
-
-    }
-
-    else {
-        $_SESSION['message'] = 'Registration failed!';
+    // We know user email exists if the rows returned are more than 0
+    if (mysqli_num_rows($result) == 1) {
+        $error = 'User with this UTORid already exists!';
         header("location: error.php");
+    } else {
+        // UTORIid doesn't already exist in a database, proceed...
+        $sql = "INSERT INTO Accounts (firstname, lastname, UTORid, password, logintype) " 
+                . "VALUES ('$firstname','$lastname','$UTORid','$password', '$logintype')";
+        // Add user to the database
+        $res = mysqli_query($db, $sql);
+        header("loaction: main.php");
     }
-
 }
+?>
+
+<html>
+	<head>
+        <title>Register</title>
+		<link rel="stylesheet" href="html/style.css">
+	</head>
+	<body>
+		<div class="loginplace" style="height: 700px">
+			<img src="html/ut.png" class="user">
+            <h2>Create Account</h2>
+
+			<form action="" method="POST">
+                <p>First Name</p>
+                    <input type="text" name="firstname" placeholder="Enter First Name" required>
+                <p>Last Name</p>
+				    <input type="text" name="lastname" placeholder="Enter Last Name" required>
+				<p>UTORid</p>
+				    <input type="text" name="UTORid" placeholder="Enter UTORid" required>
+				<p>Password</p>
+                    <input type="text" name="password" placeholder="Enter Password" required>
+
+
+                <p>Login As</p>
+                <script src="js/option.js"></script>
+                <div class="test-box" style="padding: 15px 5px 20px 0px">
+                    <select name="logintype" id="type1">
+                        <option value="1" selected>Student</option>
+                        <option value="2">T.A.</option>
+                        <option value="3">Instructor</option>
+                    </select>
+                </div>
+
+				<input type="submit" name="" value="Register">
+				<a href="main.php">Sign In</a>
+			</form>
+		</div>
+	</body>
+</html>
