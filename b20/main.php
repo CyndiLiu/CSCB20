@@ -14,9 +14,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     $result = mysqli_query($db,$sql);
 
 	// If result matched $myutorid and $mypassword, table row must be 1 row
-		
     if(mysqli_num_rows($result) == 1) {
-        $_SESSION['login_user'] = $myutorid;
+        $_SESSION['UTORid'] = $myutorid;
         header("Location: success.php");
     } else {
 		$error = "Your Login Name or Password is invalid";
