@@ -3,24 +3,22 @@
     session_start();
 	
 	if($_SERVER["REQUEST_METHOD"] == "POST") {
-
+		
 		$myutorid = $_SESSION['UTORid'];
 		$sql = "SELECT logintype FROM Accounts WHERE UTORid = '$myutorid'";
 		$result = mysqli_query($db, $sql);
-
-		if (mysqli_num_rows($result) > 0) {
+		if (mysqli_num_rows($result) == 1) {
 			while($row = mysqli_fetch_assoc($result)) {
-				if ($row["logintype"] == 1){
+				if ($result == 1){
 					header("Location: academic1.php");
-				} else if($row["logintype"] == 2) {
+				} else if($result == 2) {
 					header("Location: academic2.php");
-				} else if($row["logintype"] == 3){
+				} else if($result == 3){
 					header("Location: academic3.php");
 				}
 			}
 		}
-}
-
+	}
 ?>
 
 
@@ -70,13 +68,13 @@ Last Name (U-Z) in  PO 101
 			<p><h1>Other Academic Information</h1></p>
             <HR style="border:1  black" width="100%" color=black SIZE=1>
             
-			<form action="" method="POST"></form>
+			<form action="" method="POST">
 				<!-- <p>UTORid</p>
 				<input style="width:150px;" type="text" name="UTORid" placeholder="Enter UTORid" required>
 				<p>Password</p>
 				<input style="width:150px;" type="password" name="password" placeholder="••••••" required><br> -->
 				<p>Countinue to Mark and Feedback......</p>
-				<input type="submit" name="" value="Proceed" href="academic1.html">
+				<input type="submit" name="" value="Proceed">
             </form>
 
         </main>
