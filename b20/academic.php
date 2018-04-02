@@ -3,28 +3,28 @@
     session_start();
 	
 	if($_SERVER["REQUEST_METHOD"] == "POST") {
-		
-		// username and password sent from SQL
-		$myutorid = mysqli_real_escape_string($db,$_POST['UTORid']);
-		$mypassword = mysqli_real_escape_string($db,$_POST['password']); 
-		$mylogintype = mysqli_real_escape_string($db,$_GET['logintype']);
-		
-		$sql = "SELECT * FROM Accounts WHERE UTORid = '$myutorid' and password = '$mypassword'";
-		$result = mysqli_query($db,$sql);
-	
-    	if ($mylogintype == "1"){
-			$_SESSION['UTORid'] = $myutorid;
-			header("Location: academic1.php");
-		} else if($mylogintype == "2") {
-			$_SESSION['UTORid'] = $myutorid;
-			header("Location: academic2.php");
-		} else if($mylogintype == "3"){
-			$_SESSION['UTORid'] = $myutorid;
-			header("Location: academic3.php");
+
+		$myutorid = $_SESSION['UTORid'];
+		$sql = "SELECT logintype FROM Accounts WHERE UTORid = '$myutorid'";
+		$result = mysqli_query($db, $sql);
+
+		if (mysqli_num_rows($result) > 0) {
+			while($row = mysqli_fetch_assoc($result)) {
+				if ($row["logintype"] == 1){
+					header("Location: academic1.php");
+				} else if($row["logintype"] == 2) {
+					header("Location: academic2.php");
+				} else if($row["logintype"] == 3){
+					header("Location: academic3.php");
+				}
+			}
 		}
-	}
+}
+
 ?>
 
+
+<!DOCTYPE html>
 <html lang="en">
 	<head>
 		<title>test</title>
@@ -34,8 +34,9 @@
 
 	<body >
 		<div class="container">
+		
 		<header>
-			<p><img src="../ut.png" alt="ut" style="width:70px;height:70px;margin-left:15px;"></p>
+			<p><img src="ut.png" alt="ut" style="width:70px;height:70px;margin-left:15px;"></p>
 			<h1 id="branding">CSCB20 - Introduction to Database and Web Applications</h1>
 		</header>
 		
@@ -66,16 +67,18 @@ Last Name (P-T) in  MW  120
 Last Name (U-Z) in  PO 101
             </pre>
             
-			<p><h1>Other Academic Information</h1></p> 
-			<HR style="border:1  black" width="100%" color=black SIZE=1>
+			<p><h1>Other Academic Information</h1></p>
+            <HR style="border:1  black" width="100%" color=black SIZE=1>
+            
 			<form action="" method="POST"></form>
-				Login to check marks!
-				<p>UTORid</p>
-					<input type="text" name="UTORid" placeholder="Enter UTORid" required>
+				<!-- <p>UTORid</p>
+				<input style="width:150px;" type="text" name="UTORid" placeholder="Enter UTORid" required>
 				<p>Password</p>
-					<input type="password" name="password" placeholder="••••••" required><br>
-                <input type="submit" name="" value="Proceed" href="academic1.html">
+				<input style="width:150px;" type="password" name="password" placeholder="••••••" required><br> -->
+				<p>Countinue to Mark and Feedback......</p>
+				<input type="submit" name="" value="Proceed" href="academic1.html">
             </form>
+
         </main>
 
 	<footer>
