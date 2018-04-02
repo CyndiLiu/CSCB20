@@ -55,7 +55,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 				<p>Password</p>
                     <input type="text" name="password" placeholder="Enter Password" required>
 
-
                 <p>Login As</p>
                 <script src="js/option.js"></script>
                 <div class="test-box" style="padding: 15px 5px 20px 0px">

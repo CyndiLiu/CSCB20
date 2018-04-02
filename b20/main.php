@@ -36,9 +36,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 			<h2>Log In</h2>
 			<form action="" method="POST">
 				<p>UTORid</p>
-				<input type="text" name="UTORid" placeholder="Enter UTORid">
+					<input type="text" name="UTORid" placeholder="Enter UTORid" required>
 				<p>Password</p>
-				<input type="password" name="password" placeholder="••••••">
+					<input type="password" name="password" placeholder="••••••" required>
 				<input type="submit" name="" value="Sign In" href="register.php">
 				<a href="register.php" name="register">Create Account</a>
 			</form>
