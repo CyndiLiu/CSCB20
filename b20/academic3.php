@@ -1,6 +1,5 @@
 <?php
-    include(config.php);
-    include(academic.php);
+    include('../config.php');
     session_start();
 
     $sql = "SELECT * FROM Marks";
@@ -49,13 +48,11 @@
 						</tr>
 					</thead>
 					<tbody >
-						<?php 
-						$no = 1;
-						$total 	= 0;
-						$mylogintype = mysqli_real_escape_string($db,$_POST['logintype']);
-						while ($row = mysqli_fetch_array($query)){
-							$amount  = $row['amount'] == 0 ? '' : number_format($row['amount']);
-							if ($mylogintype == 3){
+						<?php
+						$mysql = "SELECT * FROM Marks";
+						$result = mysqli_query($db, $mysql);
+						if(mysqli_num_rows($result) > 0){
+							while ($row = mysqli_fetch_assoc($result)) {
 								echo '<tr>
 								<td>'.$row['UTORid'].'</td>
 								<td>'.$quiz1.'</td>
@@ -68,8 +65,6 @@
 								<td>'.$final. '</td>
 								</tr>';
 							}
-							$total += $row['amount'];$sql = "UPDATE MyGuests SET lastname='Doe' WHERE id=2";
-							$no++;
 						}
 						?>
 					</tbody>

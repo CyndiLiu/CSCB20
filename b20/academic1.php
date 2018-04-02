@@ -1,14 +1,6 @@
 <?php
-    include(config.php);
-    include(academic.php);
+    include('../config.php');
     session_start();
-
-    $sql = "SELECT * FROM Marks WHERE Marks.UTORid = '$myutorid'";
-    //Check connection
-    $query = mysqli_query($conn, $sql);
-    if (!$query) {
-	    die ('SQL Error: ' . mysqli_error($conn));
-	}
 ?>
 
 <html lang="en">
@@ -19,8 +11,7 @@
 	</head>
 
 	<body >
-		<div class="container">$no = 1;
-						$total 	= 0;
+		<div class="container">
 		
 		<header>
 			<p><img src="ut.png" alt="ut" style="width:70px;height:70px;margin-left:15px;"></p>
@@ -36,8 +27,7 @@
 			<HR style="border:1  black" width="100%" color=black SIZE=1>
 			<table class="data-table">
 					<thead>
-						<tr>
-							<th>Quiz1</th>.html
+							<th>Quiz1</th>
 							<th>Quiz2</th>
 							<th>Quiz3</th>
 							<th>Midterm</th>
@@ -48,23 +38,22 @@
 						</tr>
 					</thead>
 					<tbody >
-						<?php 
-						$mylogintype = mysqli_real_escape_string($db,$_POST['logintype']);
-						$results = mysql_query($db,$sql);
-						while ($row = mysqli_fetch_array($query)){
-							$amount  = $row['amount'] == 0 ? '' : number_format($row['amount']);
-							if ($mylogintype == 1){
-								echo '<tr>
-								<td>'.$quiz1.'</td>
-								<td>'.$quiz2.'</td>
-								<td>'.$quiz3.'</td>
-								<td>'.$midterm. '</td>
-								<td>'.$assignment1.'</td>
-								<td>'.$assignment2.'</td>
-								<td>'.$assignment3.'</td>
-								<td>'.$final. '</td>
-								</tr>';
-							}
+						<?php
+						$myutorid = $_SESSION['UTORid'];
+						$mysql = "SELECT quiz1, quiz2, quiz3, midterm, assignment1, assignment2, assignment3, final 
+						FROM Marks WHERE UTORid = '$myutorid'";
+						$results = mysql_query($db,$mysql);
+						if(mysqli_num_rows($result) == 1){
+							echo '<tr>
+							<td>'.$quiz1.'</td>
+							<td>'.$quiz2.'</td>
+							<td>'.$quiz3.'</td>
+							<td>'.$midterm. '</td>
+							<td>'.$assignment1.'</td>
+							<td>'.$assignment2.'</td>
+							<td>'.$assignment3.'</td>
+							<td>'.$final. '</td>
+							</tr>';
 						}
 						?>
 					</tbody>
