@@ -45,7 +45,6 @@
 						if(mysqli_num_rows($result) > 0){
 							while ($row = mysqli_fetch_assoc($result)) {
 								echo '<tr>
-								<td>'.$row['UTORid'].'</td>
 								<td>'.$row['quiz1'].'</td>
 								<td>'.$row['quiz2'].'</td>
 								<td>'.$row['quiz3'].'</td>
