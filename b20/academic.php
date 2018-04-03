@@ -8,12 +8,13 @@
 		$sql = "SELECT logintype FROM Accounts WHERE UTORid = '$myutorid'";
 		$result = mysqli_query($db, $sql);
 		if (mysqli_num_rows($result) == 1) {
-			while($row = mysqli_fetch_assoc($result)) {
-				if ($result == 1){
+			while($row = mysqli_fetch_object($result)) {
+				$_SESSION['logintype'] = $row;
+				if ($row->logintype == 1){
 					header("Location: academic1.php");
-				} else if($result == 2) {
+				} else if($row->logintype == 2) {
 					header("Location: academic2.php");
-				} else if($result == 3){
+				} else if($row->logintype == 3){
 					header("Location: academic3.php");
 				}
 			}
@@ -46,8 +47,9 @@
 			<li><a href="lecture.html">lecture</a></li>
 			<li><a href="https://markus.utsc.utoronto.ca/cscb20w18/">MarkUs</a></li>
 			<li><a href="assignment.html">assignment</a></li>
-			<li><a class="active" href="academic1.html">academic</a></li>
+			<li><a class="active" href="academic.php">academic</a></li>
 			<li><a href="resource.html">resource</a></li>
+			<li><a href="../logout.php">SIGN OUT</a></li>
 		</nav>
 
 		<main>

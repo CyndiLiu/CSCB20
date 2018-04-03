@@ -1,7 +1,3 @@
-<?php
-    include('../config.php');
-    session_start();
-?>
 
 <html lang="en">
 	<head>
@@ -16,13 +12,13 @@
 		<header>
 			<p><img src="ut.png" alt="ut" style="width:70px;height:70px;margin-left:15px;"></p>
 			<h1 id="branding">CSCB20 - Introduction to Database and Web Applications</h1>
-		</header>.html
+		</header>
 		
 		<nav>
 			<li><a class="active" href="academic.php">Back</a></li>			
 		</nav>
 
-		<main>action:'marks.php'
+		<main>
 			<p><h1>Marks</h1></p>
 			<HR style="border:1  black" width="100%" color=black SIZE=1>
 			<table class="data-table">
@@ -37,23 +33,29 @@
 							<th>Final</th>
 						</tr>
 					</thead>
-					<tbody >
+					<tbody>
 						<?php
+						include('../config.php');
+						session_start();
+						
 						$myutorid = $_SESSION['UTORid'];
-						$mysql = "SELECT quiz1, quiz2, quiz3, midterm, assignment1, assignment2, assignment3, final 
-						FROM Marks WHERE UTORid = '$myutorid'";
-						$results = mysql_query($db,$mysql);
-						if(mysqli_num_rows($result) == 1){
-							echo '<tr>
-							<td>'.$quiz1.'</td>
-							<td>'.$quiz2.'</td>
-							<td>'.$quiz3.'</td>
-							<td>'.$midterm. '</td>
-							<td>'.$assignment1.'</td>
-							<td>'.$assignment2.'</td>
-							<td>'.$assignment3.'</td>
-							<td>'.$final. '</td>
-							</tr>';
+						$mysql = "SELECT quiz1, quiz2, quiz3, midterm, assignment1, assignment2, assignment3, final  
+						FROM Marks WHERE Marks.UTORid = '$myutorid'";
+						$results = mysqli_query($db,$mysql);
+						if(mysqli_num_rows($result) > 0){
+							while ($row = mysqli_fetch_assoc($result)) {
+								echo '<tr>
+								<td>'.$row['UTORid'].'</td>
+								<td>'.$row['quiz1'].'</td>
+								<td>'.$row['quiz2'].'</td>
+								<td>'.$row['quiz3'].'</td>
+								<td>'.$row['midterm']. '</td>
+								<td>'.$row['assignment1'].'</td>
+								<td>'.$row['assignment2'].'</td>
+								<td>'.$row['assignment3'].'</td>
+								<td>'.$row['final']. '</td>
+								</tr>';
+							}
 						}
 						?>
 					</tbody>

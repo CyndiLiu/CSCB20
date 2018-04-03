@@ -1,15 +1,3 @@
-<?php
-    include('../config.php');
-    session_start();
-
-    $sql = "SELECT * FROM Marks";
-    //Check connection
-    $query = mysqli_query($conn, $sql);
-
-    if (!$query) {
-	    die ('SQL Error: ' . mysqli_error($conn));
-	}
-?>
 
 <html lang="en">
 	<head>
@@ -30,44 +18,46 @@
 			<li><a class="active" href="academic.php">Back</a></li>			
 		</nav>
 
-		<main>action:'marks.php'
+		<main>
 			<p><h1>Marks</h1></p>
 			<HR style="border:1  black" width="100%" color=black SIZE=1>
 			<table class="data-table">
-					<thead>
-						<tr>
-							<th>UTORid<th>
-							<th>Quiz1</th>
-							<th>Quiz2</th>
-							<th>Quiz3</th>
-							<th>Midterm</th>
-							<th>Assignment1</th>
-							<th>Assignment2</th>
-							<th>Assignment3</th>
-							<th>Final</th>
-						</tr>
-					</thead>
-					<tbody >
-						<?php
+				<thead>
+					<tr>
+						<th>UTORid<th>
+						<th>Quiz1</th>
+						<th>Quiz2</th>
+						<th>Quiz3</th>
+						<th>Midterm</th>
+						<th>Assignment1</th>
+						<th>Assignment2</th>
+						<th>Assignment3</th>
+						<th>Final</th>
+					</tr>
+				</thead>
+				<tbody >
+					<?php
+						include('../config.php');
+						session_start();
 						$mysql = "SELECT * FROM Marks";
 						$result = mysqli_query($db, $mysql);
 						if(mysqli_num_rows($result) > 0){
 							while ($row = mysqli_fetch_assoc($result)) {
 								echo '<tr>
 								<td>'.$row['UTORid'].'</td>
-								<td>'.$quiz1.'</td>
-								<td>'.$quiz2.'</td>
-								<td>'.$quiz3.'</td>
-								<td>'.$midterm. '</td>
-								<td>'.$assignment1.'</td>
-								<td>'.$assignment2.'</td>
-								<td>'.$assignment3.'</td>
-								<td>'.$final. '</td>
+								<td>'.$row['quiz1'].'</td>
+								<td>'.$row['quiz2'].'</td>
+								<td>'.$row['quiz3'].'</td>
+								<td>'.$row['midterm']. '</td>
+								<td>'.$row['assignment1'].'</td>
+								<td>'.$row['assignment2'].'</td>
+								<td>'.$row['assignment3'].'</td>
+								<td>'.$row['final']. '</td>
 								</tr>';
 							}
 						}
-						?>
-					</tbody>
+					?>
+				</tbody>
 			</table>
 			<p><h1>Remark Request</h1></p>
 			<HR style="border:1  black" width="100%" color=black SIZE=1>
