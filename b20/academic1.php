@@ -5,19 +5,21 @@
 	if($_SERVER["REQUEST_METHOD"] == "POST") {
 
 		$mymessage = $_POST['message'];
-
 		$myutorid = $_SESSION['UTORid'];
+
+		// Check whether input "remarkreq" is int type as wanted
 		if (isset($_POST['remarkreq']) && is_numeric($_POST['remarkreq'])){
 			$remarkreq = $_POST['remarkreq'];
 		}
 		
+		// Select all information with user information
 		$mysql = "SELECT * FROM Remark WHERE UTORid = '$myutorid'";
 		$result = mysqli_query($db, $mysql);
 		
-		if (mysqli_num_rows($result)==0) {
+		if (mysqli_num_rows($result) == 0) {
 			$sql = "INSERT INTO Remark (UTORid, remarkreq, message) VALUE ('$myutorid', '$remarkreq', '$mymessage')";
 			$res = mysqli_query($db, $sql);
-		} else if (mysqli_num_rows($result)==1){
+		} else if (mysqli_num_rows($result) == 1){
 			while ($row = mysqli_fetch_assoc($result)) {
 				if ($row['remarkreq'] != $remarkreq){
 					$sql = "INSERT INTO Remark (UTORid, remarkreq, message) VALUE ('$myutorid', '$remarkreq', '$mymessage')";
@@ -46,7 +48,10 @@
 		</header>
 		
 		<nav>
-			<li><a class="active" href="academic.php">Back</a></li>			
+			<li><a class="active" href="academic1.php">Academic</a></li>
+			<li><a href="feedback.php">Feedback</a></li>
+			<li><a href="academic.php">Back</a></li>
+
 		</nav>
 
 		<main>
@@ -68,7 +73,7 @@
 						<?php
 						$myutorid = $_SESSION['UTORid'];
 						$mysql = "SELECT quiz1, quiz2, quiz3, midterm, assignment1, assignment2, assignment3, final  
-						FROM Marks WHERE UTORid = '$myutorid'";
+						FROM Mark WHERE UTORid = '$myutorid'";
 						$result = mysqli_query($db,$mysql);
 						if(mysqli_num_rows($result) > 0){
 							while ($row = mysqli_fetch_assoc($result)) {
@@ -103,24 +108,10 @@
 					<option value="8">Final</option>
 				</select><br>
 
-				<textarea name=message rows="3" cols="50" style="margin-top:20px">Comments here(Please limit in 150 words). </textarea><br>
+				<textarea name="message" rows="3" cols="50" style="margin-top:20px">Comments here(Please limit in 150 words).</textarea><br>
 				<input style="margin-top:20px" type="submit" name="" value="Remark">
 
 			</form>
-			
-			<p><h1>Feedback</h1></p>
-			<HR style="border:1  black" width="100%" color=black SIZE=1>
-			<p>You can start with......</p>
-				<pre>
-(a) What do you like about the instructor teaching?
-(b) What do you recommand the instructor to do to improve their teaching?
-(c) What do you like about the labs?
-(d) What do you recommand the lab instructors to do to improve their lab teaching?
-(e) ......
-            	</pre>
-			<textarea rows="10" cols="50">Comments here. </textarea><br>
-			<button href="academic1.html">Click Me!</button>
-            
         </main>
 
 			
