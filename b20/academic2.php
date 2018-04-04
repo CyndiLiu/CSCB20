@@ -1,7 +1,7 @@
 
 <html lang="en">
 	<head>
-		<title>test</title>
+		<title>academic</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<link href="main.css" rel="stylesheet" type="text/css"/>
 	</head>
@@ -19,8 +19,42 @@
 		</nav>
 
 		<main>
-			<p><h1>Marks</h1></p>
+			<p><h1>Remark Applications</h1></p>
 			<HR style="border:1  black" width="100%" color=black SIZE=1>
+			
+			<table class="data-table">
+					<thead>
+						<tr>
+							<th>UTORid</th>
+							<th>Remark</th>
+						</tr>
+					</thead>
+					<tbody>
+			<?php
+			include('../config.php');
+			session_start();
+
+				// select the remark requests from database and show them in T.A.'s academic page
+				$sql = "SELECT * FROM Remark";
+				$result1 = mysqli_query($db,$sql);
+				if(mysqli_num_rows($result1) > 0){
+					while ($row1 = mysqli_fetch_assoc($result1)) {
+						// change the int type to the corresponding
+						if ($row1['remarkreq'] == 1)	$mark = "Quiz1";
+						if ($row1['remarkreq'] == 2)	$mark = "Quiz2";
+						if ($row1['remarkreq'] == 3)	$mark = "Quiz3";
+						if ($row1['remarkreq'] == 4)	$mark = "Midterm";
+						if ($row1['remarkreq'] == 5)	$mark = "Assignment1";
+						if ($row1['remarkreq'] == 6)	$mark = "Assignment2";
+						if ($row1['remarkreq'] == 7)	$mark = "Assignment3";
+						if ($row1['remarkreq'] == 8)	$mark = "Final";
+						echo '<tr>
+						<td>'.$row1['utorid'].'</td>
+						<td>'.$mark.'</td>
+						</tr>';
+					}
+				}
+			?>
 			<table class="data-table">
 					<thead>
 						<tr>
@@ -36,39 +70,37 @@
 						</tr>
 					</thead>
 					<tbody>
-						<?php 
-						include('../config.php');
-						session_start();
-						
-						$mysql = "SELECT * FROM Marks";
-						$result = mysqli_query($db, $mysql);
-						if(mysqli_num_rows($result) > 0){
-							while ($row = mysqli_fetch_assoc($result)) {
-								echo '<tr>
-								<td>'.$row['UTORid'].'</td>
-								<td>'.$row['quiz1'].'</td>
-								<td>'.$row['quiz2'].'</td>
-								<td>'.$row['quiz3'].'</td>
-								<td>'.$row['midterm']. '</td>
-								<td>'.$row['assignment1'].'</td>
-								<td>'.$row['assignment2'].'</td>
-								<td>'.$row['assignment3'].'</td>
-								<td>'.$row['final']. '</td>
-								</tr>';
-							}
-						}
-						?>
+
+
+			<?php
+
+				// select the mark of students who request for remark and show them in T.A.'s academic page
+				$mysql = "SELECT * FROM Mark Inner Join Remark ON Mark.UTORid = Remark.utorid";
+				$result = mysqli_query($db, $mysql);
+				if(mysqli_num_rows($result) > 0){
+					while ($row = mysqli_fetch_assoc($result)) {
+						echo '<tr>
+						<td>'.$row['UTORid'].'</td>
+						<td>'.$row['quiz1'].'</td>
+						<td>'.$row['quiz2'].'</td>
+						<td>'.$row['quiz3'].'</td>
+						<td>'.$row['midterm']. '</td>
+						<td>'.$row['assignment1'].'</td>
+						<td>'.$row['assignment2'].'</td>
+						<td>'.$row['assignment3'].'</td>
+						<td>'.$row['final']. '</td>
+						</tr>';
+					}
+				}
+			?>
+
 					</tbody>
 			</table>
-			<p><h1>Remark Request</h1></p>
+			<p><h1>Anonymous Feedback</h1></p>
 			<HR style="border:1  black" width="100%" color=black SIZE=1>
-
-			<textarea rows="10" cols="50">Comments here. </textarea><br>
-			<button href="academic1.html">Click Me!</button>
-
-            
+			<!-- feedback body here -->
+			          
         </main>
-
 			
 	<footer>
 		<a href="http://web.cs.toronto.edu/">cs lab</a>
