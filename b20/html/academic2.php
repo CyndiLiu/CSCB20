@@ -50,7 +50,7 @@
 									if ($row1['remarkreq'] == 7)	$mark = "Assignment3";
 									if ($row1['remarkreq'] == 8)	$mark = "Final";
 									echo '<tr>
-									<td>'.$row1['UTORid'].'</td>
+									<td>'.$row1['utorid'].'</td>
 									<td>'.$mark.'</td>
 									<td>'.$row1['message'].'</td>
 									</tr>';
@@ -79,9 +79,9 @@
 					<?php
 
 						// select the mark of students who request for remark and show them in T.A.'s academic page
-						$mysql = "SELECT * FROM Marks Inner Join Remark ON Marks.UTORid = Remark.utorid";
+						$mysql = "SELECT * FROM Mark Inner Join Remark ON Mark.UTORid = Remark.utorid";
 						$result = mysqli_query($db, $mysql);
-						if(mysqli_num_rows($result)==1){
+						if(mysqli_num_rows($result) > 0){
 							while ($row = mysqli_fetch_assoc($result)) {
 								echo '<tr>
 								<td>'.$row['UTORid'].'</td>
@@ -102,11 +102,11 @@
 			</table>
 			
 			<form action="changemark.php" method="POST">
-				<p><h1>Update Marks</h1></p>
+				<p style="margin-top: 7%"><h1>Update Mark</h1></p>
 				<HR style="border:1  black" width="100%" color=black SIZE=1>
-				<p>Enter Student's UTORid</p>
+				<a>Enter Student's UTORid</a>
 					<input type="text" name="Studentid" required>
-				<p>Select type</p>
+				<a>Select type</a>
 					<select name="markop" id="type1">
 						<option value=Null selected>--SELECT--</option>
 						<option value="1">Quiz1</option>
@@ -117,10 +117,10 @@
 						<option value="6">Assignment2</option>
 						<option value="7">Assignment3</option>
 						<option value="8">Final</option>
-					</select>
-				<p>Enter Mark:</p>
+					</select><br>
+				<a>Enter Mark:</a>
 					<input type="text" name="mark" required><br>
-				<input style="margin-top:10px" type="submit" name="" value="Remark">
+				<input style="margin-top:10px" type="submit" name="" value="Update">
 
 			</form>
 
