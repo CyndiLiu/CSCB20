@@ -5,12 +5,13 @@ session_start();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
+    // Initialize all the input
     $firstname = $_POST['firstname'];
     $lastname = $_POST['lastname'];
     $UTORid = $_POST['UTORid'];
     $password = $_POST['password'];
 
-    // Int type field
+    // Check whether the logintype is int and save the value
     if (isset($_POST['logintype']) && is_numeric($_POST['logintype']))
         $logintype = $_POST['logintype'];
     else
@@ -25,16 +26,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = 'User with this UTORid already exists!';
         header("location: error.php");
     } else {
-        // UTORIid doesn't already exist in a database, proceed...
+        // Insert the user information to the database
         $sql = "INSERT INTO Accounts (firstname, lastname, UTORid, password, logintype) " 
                 . "VALUES ('$firstname','$lastname','$UTORid','$password', '$logintype')";
         // Add user to the database
         $res = mysqli_query($db, $sql);
-        header("loaction: main.php");
+        header("location: main.php");
     }
 }
 ?>
-
+    
 <html>
 	<head>
         <title>Register</title>
