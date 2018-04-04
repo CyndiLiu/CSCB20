@@ -50,7 +50,7 @@
 									if ($row1['remarkreq'] == 7)	$mark = "Assignment3";
 									if ($row1['remarkreq'] == 8)	$mark = "Final";
 									echo '<tr>
-									<td>'.$row1['utorid'].'</td>
+									<td>'.$row1['UTORid'].'</td>
 									<td>'.$mark.'</td>
 									<td>'.$row1['message'].'</td>
 									</tr>';
@@ -79,7 +79,7 @@
 					<?php
 
 						// select the mark of students who request for remark and show them in T.A.'s academic page
-						$mysql = "SELECT * FROM Mark Inner Join Remark ON Mark.UTORid = Remark.utorid";
+						$mysql = "SELECT * FROM Marks Inner Join Remark ON Marks.UTORid = Remark.utorid";
 						$result = mysqli_query($db, $mysql);
 						if(mysqli_num_rows($result) > 0){
 							while ($row = mysqli_fetch_assoc($result)) {
@@ -102,7 +102,7 @@
 			</table>
 			
 			<form action="changemark.php" method="POST">
-				<p style="margin-top: 7%"><h1>Update Mark</h1></p>
+				<p><h1>Update Marks</h1></p>
 				<HR style="border:1  black" width="100%" color=black SIZE=1>
 				<a>Enter Student's UTORid</a>
 					<input type="text" name="Studentid" required>

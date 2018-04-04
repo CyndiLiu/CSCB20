@@ -63,9 +63,9 @@
 			<form action="changemark.php" method="POST">
 				<p><h1>Update Marks</h1></p>
 				<HR style="border:1  black" width="100%" color=black SIZE=1>
-				<p>Enter Student's UTORid</p>
+				<a>Enter Student's UTORid</a>
 					<input type="text" name="Studentid" required>
-				<p>Select type</p>
+				<a>Select type</a>
 					<select name="markop" id="type1">
 						<option value=Null selected>--SELECT--</option>
 						<option value="1">Quiz1</option>
@@ -77,7 +77,7 @@
 						<option value="7">Assignment3</option>
 						<option value="8">Final</option>
 					</select>
-				<p>Enter Mark:</p>
+				<a>Enter Mark:</a>
 					<input type="text" name="mark" required><br>
 				<input style="margin-top:10px" type="submit" name="" value="Remark">
 
