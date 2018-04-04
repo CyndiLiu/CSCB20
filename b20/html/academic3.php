@@ -1,7 +1,7 @@
 
 <html lang="en">
 	<head>
-		<title>Academic</title>
+		<title>academic</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<link href="main.css" rel="stylesheet" type="text/css"/>
 	</head>
@@ -19,12 +19,14 @@
 		</nav>
 
 		<main>
-			<p><h1>Students' Marks</h1></p>
+			<!-- table to show the marks of all the students to instructor -->
+			<p><h1>Marks</h1></p>
 			<HR style="border:1  black" width="100%" color=black SIZE=1>
 			<table class="data-table">
+				<!-- table body -->
 				<thead>
 					<tr>
-						<th>UTORid<th>
+						<th>UTORid</th>
 						<th>Quiz1</th>
 						<th>Quiz2</th>
 						<th>Quiz3</th>
@@ -35,12 +37,18 @@
 						<th>Final</th>
 					</tr>
 				</thead>
+				
+				<!-- php body -->
 				<tbody >
 					<?php
 						include('../config.php');
 						session_start();
-						$mysql = "SELECT * FROM Marks";
+
+						// Get students'id and which part he wants to remark
+						$mysql = "SELECT * FROM Mark";
 						$result = mysqli_query($db, $mysql);
+
+						// Move what we get from table "Mark" to the table in HTML
 						if(mysqli_num_rows($result) > 0){
 							while ($row = mysqli_fetch_assoc($result)) {
 								echo '<tr>
@@ -58,9 +66,11 @@
 						}
 					?>
 				</tbody>
+
 			</table>
-			
+
 			<form action="changemark.php" method="POST">
+				<!-- place can update the mark of students -->
 				<p><h1>Update Marks</h1></p>
 				<HR style="border:1  black" width="100%" color=black SIZE=1>
 				<a>Enter Student's UTORid</a>
@@ -76,7 +86,7 @@
 						<option value="6">Assignment2</option>
 						<option value="7">Assignment3</option>
 						<option value="8">Final</option>
-					</select>
+					</select><br>
 				<a>Enter Mark:</a>
 					<input type="text" name="mark" required><br>
 				<input style="margin-top:10px" type="submit" name="" value="Remark">
@@ -87,9 +97,22 @@
 			<HR style="border:1  black" width="100%" color=black SIZE=1>
 			<!-- feedback body here -->
 			
+			<?php
+				// Get all anonymously feedback
+				$mysql = "SELECT * FROM Feedback";
+				$result = mysqli_query($db, $mysql);
+
+				// Move what we get from table "Feedback" to website
+				if(mysqli_num_rows($result) > 0){
+					while ($row = mysqli_fetch_assoc($result)) {
+						echo $row['feedback'];
+						echo "<br>";
+					}
+				}
+			?>
+
         </main>
 
-			
 	<footer>
 		<a href="http://web.cs.toronto.edu/">cs lab</a>
 		<p>Copyright © Wenyun Liu, Xinyi Liao</p>

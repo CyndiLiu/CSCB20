@@ -108,7 +108,7 @@
 					<option value="8">Final</option>
 				</select><br>
 
-				<textarea name="message" rows="3" cols="50" style="margin-top:20px">Comments here(Please limit in 150 words).</textarea><br>
+				<textarea name="message" rows="3" cols="50" style="margin-top:20px" required>Comments here(Please limit in 150 words).</textarea><br>
 				<input style="margin-top:20px" type="submit" name="" value="Remark">
 
 			</form>

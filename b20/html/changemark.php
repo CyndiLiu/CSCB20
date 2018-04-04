@@ -40,15 +40,8 @@
                     $res = mysqli_query($db, $sql);
                 } else if ($markop == 8){
                     $sql = "UPDATE Marks SET final='$mark' WHERE UTORid='$Studentid'";
-                    $res = mysqli_query($db, $sql);
                 }
             }
-        }
-
-        $delsql = "DELETE from Remark WHERE UTORid='$Studentid' and remarkreq ='$markop'";
-        $delete = mysqli_query($db,$delsql);
-        if (mysqli_num_rows($delete) == 0) {
-            echo "Cannot find this request.";
         }
         
         $row = $_SESSION['logintype'];

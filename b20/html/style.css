@@ -84,7 +84,7 @@ h3 {
 	cursor: pointer;
 	border-radius: 20px;
 }
-
+ 
 .loginplace input[type="submit"]:hover {
 	background: #ffcfe2;
 	color: #262626;
