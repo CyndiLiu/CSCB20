@@ -68,7 +68,45 @@
 				</tbody>
 
 			</table>
-
+			
+			<p><h1>Remark Requests</h1></p>
+			<HR style="border:1  black" width="100%" color=black SIZE=1>
+			<!-- table to show all the remark requests to instructor -->
+			<table class="data-table">
+					<thead>
+						<tr>
+							<th>UTORid</th>
+							<th>Remark</th>
+							<th>Message</th>
+						</tr>
+					</thead>
+					<tbody>
+						<?php
+							// select the remark requests from database
+							$sql = "SELECT * FROM Remark";
+							$result1 = mysqli_query($db,$sql);
+							if(mysqli_num_rows($result1) > 0){
+								while ($row1 = mysqli_fetch_assoc($result1)) {
+									// change the int type to the corresponding
+									if ($row1['remarkreq'] == 1)	$mark = "Quiz1";
+									if ($row1['remarkreq'] == 2)	$mark = "Quiz2";
+									if ($row1['remarkreq'] == 3)	$mark = "Quiz3";
+									if ($row1['remarkreq'] == 4)	$mark = "Midterm";
+									if ($row1['remarkreq'] == 5)	$mark = "Assignment1";
+									if ($row1['remarkreq'] == 6)	$mark = "Assignment2";
+									if ($row1['remarkreq'] == 7)	$mark = "Assignment3";
+									if ($row1['remarkreq'] == 8)	$mark = "Final";
+									echo '<tr>
+									<td>'.$row1['UTORid'].'</td>
+									<td>'.$mark.'</td>
+									<td>'.$row1['message'].'</td>
+									</tr>';
+								}
+							}
+						?>
+					</tbody>
+			</table>
+			
 			<form action="changemark.php" method="POST">
 				<!-- place can update the mark of students -->
 				<p><h1>Update Marks</h1></p>
@@ -89,7 +127,7 @@
 					</select><br>
 				<a>Enter Mark:</a>
 					<input type="text" name="mark" required><br>
-				<input style="margin-top:10px" type="submit" name="" value="Remark">
+				<input style="margin-top:10px" type="submit" name="" value="Update">
 
 			</form>
 
